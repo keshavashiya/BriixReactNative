@@ -27,8 +27,6 @@ const Launch = () => {
 		shallowEqual,
 	);
 
-	// console.log(appReducer);
-
 	useEffect(() => {
 		if (appReducer.stateSuccess) {
 			// console.log(appReducer.stateSuccess);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const SIgnup = () => {
+const Signup = () => {
 	return (
 		<View>
 			<Text>SignUp</Text>
@@ -9,7 +9,7 @@ const SIgnup = () => {
 	);
 };
 
-export default SIgnup;
+export default Signup;
 
 // eslint-disable-next-line no-unused-vars
 const styles = StyleSheet.create({});

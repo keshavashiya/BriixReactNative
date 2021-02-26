@@ -22,6 +22,7 @@ const Signup = props => {
 
 	const [visible, setVisible] = useState(false);
 
+	// eslint-disable-next-line no-unused-vars
 	const onToggleSnackBar = () => setVisible(true);
 
 	const onDismissSnackBar = () => setVisible(false);

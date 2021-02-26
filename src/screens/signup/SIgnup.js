@@ -139,12 +139,13 @@ const Signup = props => {
 							<View style={styles.fNameView}>
 								<TextInput
 									autoFocus
-									mode="outlined"
+									mode="flat"
 									value={formState.values.FirstName || ''}
 									// placeholder="email/mobile"
 									label="First Name"
 									onChangeText={text => handleFirstNameChange(text)}
 									style={styles.textInput}
+									underlineColor="transparent"
 								/>
 							</View>
 							<View style={styles.lNameView}>
@@ -248,6 +249,14 @@ const styles = StyleSheet.create({
 		// paddingTop: 24,
 		paddingLeft: 24,
 		color: 'gray',
+	},
+	textInput: {
+		borderRadius: 0,
+		borderTopLeftRadius: 0,
+		borderTopRightRadius: 0,
+		height: 57,
+		overflow: 'hidden',
+		backgroundColor: '#fff',
 	},
 	smalltext: {
 		fontSize: 12,

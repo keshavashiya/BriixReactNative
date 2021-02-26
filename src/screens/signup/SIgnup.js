@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
-import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView } from 'react-native';
+import { View, KeyboardAvoidingView, StyleSheet, Text, ScrollView } from 'react-native';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import Icon from 'react-native-vector-icons/Feather';
+// import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
-import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
+// import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 
-import Routes from '../../navigation/routes';
-import NavigationService from '../../navigation';
+// import Routes from '../../navigation/routes';
+// import NavigationService from '../../navigation';
 
 const Signup = props => {
 	const InitialState = {
@@ -18,7 +19,7 @@ const Signup = props => {
 	};
 
 	const [formState, setFormState] = useState(InitialState);
-	const [disabled, setDisabled] = useState(true);
+	// const [disabled, setDisabled] = useState(true);
 
 	const [visible, setVisible] = useState(false);
 
@@ -146,12 +147,13 @@ const Signup = props => {
 									label="First Name"
 									onChangeText={text => handleFirstNameChange(text)}
 									style={styles.textInput}
-									underlineColor="transparent"
+									// underlineColor="transparent"
+									// theme={{ colors: { text: 'green', primary: 'yellow' } }}
 								/>
 							</View>
 							<View style={styles.lNameView}>
 								<TextInput
-									mode="outlined"
+									mode="flat"
 									value={formState.values.LastName || ''}
 									// placeholder="email/mobile"
 									label="Last Name"
@@ -161,7 +163,7 @@ const Signup = props => {
 							</View>
 						</View>
 						<TextInput
-							mode="outlined"
+							mode="flat"
 							value={formState.values.Email || ''}
 							// placeholder="email/mobile"
 							label="Email Id"
@@ -169,7 +171,7 @@ const Signup = props => {
 							style={styles.textInput}
 						/>
 						<TextInput
-							mode="outlined"
+							mode="flat"
 							value={formState.values.MobileNumber || ''}
 							// placeholder="Mobile Number/mobile"
 							label="Mobile Number"
@@ -177,16 +179,17 @@ const Signup = props => {
 							style={styles.textInput}
 						/>
 						<TextInput
-							mode="outlined"
+							mode="flat"
 							value={formState.values.Password || ''}
 							// placeholder="Password/mobile"
 							label="Password"
 							onChangeText={text => handlePasswordChange(text)}
 							style={styles.textInput}
 							secureTextEntry={true}
+							right={<TextInput.Icon name={() => <Icon name="eye" size={20} />} />}
 						/>
 						<TextInput
-							mode="outlined"
+							mode="flat"
 							value={formState.values.ConfirmPassword || ''}
 							// placeholder="ConfirmPassword/mobile"
 							label="Confirm Password"
@@ -252,12 +255,14 @@ const styles = StyleSheet.create({
 		color: 'gray',
 	},
 	textInput: {
-		borderRadius: 0,
-		borderTopLeftRadius: 0,
-		borderTopRightRadius: 0,
-		height: 57,
+		borderRadius: 10,
+		// borderTopLeftRadius: 0,
+		// borderTopRightRadius: 0,
+		borderBottomWidth: 0,
+		// height: 57,
 		overflow: 'hidden',
-		backgroundColor: '#fff',
+		marginTop: 12,
+		// backgroundColor: '#fff',
 	},
 	smalltext: {
 		fontSize: 12,

@@ -23,6 +23,8 @@ const Signup = props => {
 
 	const [formState, setFormState] = useState(InitialState);
 	// const [disabled, setDisabled] = useState(true);
+	const [viewPassword, setViewPassword] = useState(true);
+	const [viewConfirmPassword, setViewConfirmPassword] = useState(true);
 
 	const [visible, setVisible] = useState(false);
 
@@ -188,12 +190,17 @@ const Signup = props => {
 							label="Password"
 							onChangeText={text => handlePasswordChange(text)}
 							style={styles.textInput}
-							secureTextEntry={true}
+							secureTextEntry={viewPassword}
 							right={
 								<TextInput.Icon
 									name={() => (
-										<IconX origin={ICON_TYPE.MATERIAL_COMMUNITY} name={'eye-outline'} size={30} />
+										<IconX
+											origin={ICON_TYPE.MATERIAL_COMMUNITY}
+											name={viewPassword ? 'eye-outline' : 'eye-off-outline'}
+											size={30}
+										/>
 									)}
+									onPress={() => setViewPassword(!viewPassword)}
 								/>
 							}
 						/>
@@ -204,7 +211,19 @@ const Signup = props => {
 							label="Confirm Password"
 							onChangeText={text => handleConfirmPasswordChange(text)}
 							style={styles.textInput}
-							secureTextEntry={true}
+							secureTextEntry={viewConfirmPassword}
+							right={
+								<TextInput.Icon
+									name={() => (
+										<IconX
+											origin={ICON_TYPE.MATERIAL_COMMUNITY}
+											name={viewConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
+											size={30}
+										/>
+									)}
+									onPress={() => setViewConfirmPassword(!viewConfirmPassword)}
+								/>
+							}
 						/>
 					</View>
 					<View style={styles.btnContainer}>

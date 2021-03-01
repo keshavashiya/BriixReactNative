@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, 
-    TouchableOpacity} from 'react-native';
+import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
@@ -51,20 +50,20 @@ const Signin = props => {
 				Password: true,
 			},
 		}));
-		setPasswordError(false);   
+		setPasswordError(false);
 	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
 		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(formState.values.Email)) {
-            console.log("Email is Correct");
+		if (reg.test(formState.values.Email)) {
+			console.log('Email is Correct');
 			setEmailError(false);
-        }else {
-			setEmailError(true);    
-            console.log("Email is Not Correct");
-        }
-		setPasswordError(true);   
+		} else {
+			setEmailError(true);
+			console.log('Email is Not Correct');
+		}
+		setPasswordError(true);
 		console.log(formState);
 	};
 
@@ -88,11 +87,13 @@ const Signin = props => {
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
 						/>
-						{emailError ? 
-						<HelperText type="error" visible={emailError}>
-							{formState.touched.Email && formState.values.Email.length ? 'Email address is invalid!' : 'Please enter your email address.' }
-						</HelperText>
-						: null}
+						{emailError ? (
+							<HelperText type="error" visible={emailError}>
+								{formState.touched.Email && formState.values.Email.length
+									? 'Email address is invalid!'
+									: 'Please enter your email address.'}
+							</HelperText>
+						) : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.Password || ''}
@@ -103,22 +104,29 @@ const Signin = props => {
 							secureTextEntry={eyeState}
 							right={
 								<TextInput.Icon
-									onPress={(e) => {setEyeVisible(eyeState ? false : true)}}
+									onPress={e => {
+										setEyeVisible(eyeState ? false : true);
+									}}
 									name={() => (
-										<IconX origin={ICON_TYPE.FEATHER_ICONS} name={eyeState ? 'eye-off' : 'eye'} size={16} />
+										<IconX
+											origin={ICON_TYPE.FEATHER_ICONS}
+											name={eyeState ? 'eye-off' : 'eye'}
+											size={16}
+										/>
 									)}
 								/>
 							}
 						/>
-						{passwordError ?
-						<HelperText type="error" visible={passwordError}>
-							{formState.touched.Password && formState.values.Password.length ? '' : 'Please enter your password.' }
-						</HelperText>
-						:null}
+						{passwordError ? (
+							<HelperText type="error" visible={passwordError}>
+								{formState.touched.Password && formState.values.Password.length
+									? ''
+									: 'Please enter your password.'}
+							</HelperText>
+						) : null}
 						<TouchableOpacity>
-						<Text style={[styles.smalltext,{textAlign:'right'}]}>Forgot Password?</Text>
+							<Text style={[styles.smalltext, { textAlign: 'right' }]}>Forgot Password?</Text>
 						</TouchableOpacity>
-
 					</View>
 					<View style={styles.btnContainer}>
 						<Button
@@ -135,12 +143,12 @@ const Signin = props => {
 							style={styles.button}
 							// disabled={disabled}
 							// title="Submit"
-                            color="#002842"
+							color="#002842"
 							mode="text"
 							// onPress={NavigationService.navigate(Routes.SIGNUP_SCREEN)}
-							>
+						>
 							Sign Up
-						</Button> 
+						</Button>
 					</View>
 				</View>
 				{/* </TouchableWithoutFeedback> */}
@@ -153,7 +161,7 @@ export default Signin;
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
 	},
 	inner: {
 		padding: 24,
@@ -182,8 +190,8 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
-		color:'#14142B',
-		height:64,
+		color: '#14142B',
+		height: 64,
 		// backgroundColor: '#fff',
 	},
 	smalltext: {

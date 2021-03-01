@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
 import { View, KeyboardAvoidingView, StyleSheet, Text, ScrollView } from 'react-native';
-import { Button, TextInput, Snackbar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/Feather';
+import { Button, TextInput } from 'react-native-paper';
+// import Icon from 'react-native-vector-icons/Feather';
+import { IconX, ICON_TYPE } from '../../icons';
 // import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
 // import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 
 // import Routes from '../../navigation/routes';
 // import NavigationService from '../../navigation';
+
+import { Snackbar } from '../components';
 
 const Signup = props => {
 	const InitialState = {
@@ -186,7 +189,13 @@ const Signup = props => {
 							onChangeText={text => handlePasswordChange(text)}
 							style={styles.textInput}
 							secureTextEntry={true}
-							right={<TextInput.Icon name={() => <Icon name="eye" size={20} />} />}
+							right={
+								<TextInput.Icon
+									name={() => (
+										<IconX origin={ICON_TYPE.MATERIAL_COMMUNITY} name={'eye-outline'} size={30} />
+									)}
+								/>
+							}
 						/>
 						<TextInput
 							mode="flat"
@@ -212,7 +221,7 @@ const Signup = props => {
 					</View>
 				</View>
 				{/* </TouchableWithoutFeedback> */}
-				<Snackbar
+				{/* <Snackbar
 					duration={1000}
 					visible={visible}
 					onDismiss={onDismissSnackBar}
@@ -224,7 +233,11 @@ const Signup = props => {
 					// }}
 				>
 					OTP successfully sent!
-				</Snackbar>
+				</Snackbar> */}
+
+				{visible && (
+					<Snackbar onDismissSnackBar={onDismissSnackBar} visible={visible} message="Signup message" />
+				)}
 			</KeyboardAvoidingView>
 		</ScrollView>
 	);

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView } from 'react-native';
-import { Button, TextInput, Snackbar } from 'react-native-paper';
+import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, 
+    TouchableOpacity} from 'react-native';
+import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-// import useCheckVersion from '../CheckVersion';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
+import { IconX, ICON_TYPE } from '../../icons';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
@@ -18,43 +18,9 @@ const Signin = props => {
 	};
 
 	const [formState, setFormState] = useState(InitialState);
-	const [disabled, setDisabled] = useState(true);
-
-	const [visible, setVisible] = useState(false);
-
-	const onToggleSnackBar = () => setVisible(true);
-
-	const onDismissSnackBar = () => setVisible(false);
-
-	const handleFirstNameChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
-		setFormState(frmState => ({
-			...frmState,
-			values: {
-				...frmState.values,
-				FirstName: text,
-			},
-			touched: {
-				...formState.touched,
-				FirstName: true,
-			},
-		}));
-	};
-
-	const handleLastNameChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
-		setFormState(frmState => ({
-			...frmState,
-			values: {
-				...frmState.values,
-				LastName: text,
-			},
-			touched: {
-				...formState.touched,
-				LastName: true,
-			},
-		}));
-	};
+	const [eyeState, setEyeVisible] = useState(true);
+	const [emailError, setEmailError] = useState(false);
+	const [passwordError, setPasswordError] = useState(false);
 
 	const handleEmailChange = text => {
 		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
@@ -69,21 +35,7 @@ const Signin = props => {
 				Email: true,
 			},
 		}));
-	};
-
-	const handleMobileNumberChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
-		setFormState(frmState => ({
-			...frmState,
-			values: {
-				...frmState.values,
-				MobileNumber: text,
-			},
-			touched: {
-				...formState.touched,
-				MobileNumber: true,
-			},
-		}));
+		setEmailError(false);
 	};
 
 	const handlePasswordChange = text => {
@@ -99,27 +51,21 @@ const Signin = props => {
 				Password: true,
 			},
 		}));
-	};
-
-	const handleConfirmPasswordChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
-		setFormState(frmState => ({
-			...frmState,
-			values: {
-				...frmState.values,
-				ConfirmPassword: text,
-			},
-			touched: {
-				...formState.touched,
-				ConfirmPassword: true,
-			},
-		}));
+		setPasswordError(false);   
 	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
-
-		console.log(formState.values);
+		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(formState.values.Email)) {
+            console.log("Email is Correct");
+			setEmailError(false);
+        }else {
+			setEmailError(true);    
+            console.log("Email is Not Correct");
+        }
+		setPasswordError(true);   
+		console.log(formState);
 	};
 
 	return (
@@ -135,30 +81,50 @@ const Signin = props => {
 				<View style={styles.inner}>
 					<View>
 						<TextInput
-							// mode="outlined"
+							mode="flat"
 							value={formState.values.Email || ''}
 							// placeholder="email/mobile"
 							label="Username"
 							onChangeText={text => handleEmailChange(text)}
-							style={[styles.textInput,{marginBottom:8}]}
+							style={[styles.textInput]}
 						/>
+						{emailError ? 
+						<HelperText type="error" visible={emailError}>
+							{formState.touched.Email && formState.values.Email.length ? 'Email address is invalid!' : 'Please enter your email address.' }
+						</HelperText>
+						: null}
 						<TextInput
-							// mode="outlined"
+							mode="flat"
 							value={formState.values.Password || ''}
 							// placeholder="Password/mobile"
 							label="Password"
 							onChangeText={text => handlePasswordChange(text)}
 							style={styles.textInput}
-							secureTextEntry={true}
+							secureTextEntry={eyeState}
+							right={
+								<TextInput.Icon
+									onPress={(e) => {setEyeVisible(eyeState ? false : true)}}
+									name={() => (
+										<IconX origin={ICON_TYPE.FEATHER_ICONS} name={eyeState ? 'eye-off' : 'eye'} size={16} />
+									)}
+								/>
+							}
 						/>
-						<Text style={[styles.smalltext,{marginBottom:8,marginBottom:30}]}>Forgot Password?</Text>
+						{passwordError ?
+						<HelperText type="error" visible={passwordError}>
+							{formState.touched.Password && formState.values.Password.length ? '' : 'Please enter your password.' }
+						</HelperText>
+						:null}
+						<TouchableOpacity>
+						<Text style={[styles.smalltext,{textAlign:'right'}]}>Forgot Password?</Text>
+						</TouchableOpacity>
+
 					</View>
 					<View style={styles.btnContainer}>
 						<Button
-							style={[styles.button,{marginBottom:10}]}
+							style={[styles.button]}
 							// disabled={disabled}
 							// title="Submit"
-                            color="#002842"
 							mode="contained"
 							onPress={handleSubmit}>
 							Sign In
@@ -171,25 +137,13 @@ const Signin = props => {
 							// title="Submit"
                             color="#002842"
 							mode="text"
-							onPress={handleSubmit}>
+							// onPress={NavigationService.navigate(Routes.SIGNUP_SCREEN)}
+							>
 							Sign Up
 						</Button> 
 					</View>
 				</View>
 				{/* </TouchableWithoutFeedback> */}
-				<Snackbar
-					duration={1000}
-					visible={visible}
-					onDismiss={onDismissSnackBar}
-					// action={{
-					// 	label: 'Undo',
-					// 	onPress: () => {
-					// 		// Do something
-					// 	},
-					// }}
-				>
-					OTP successfully sent!
-				</Snackbar>
 			</KeyboardAvoidingView>
 		</ScrollView>
 	);
@@ -199,7 +153,7 @@ export default Signin;
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flex: 1
 	},
 	inner: {
 		padding: 24,
@@ -207,6 +161,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 	},
 	header: {
+		color: '#121212',
 		fontSize: 36,
 		marginTop: 48,
 		paddingTop: 24,
@@ -217,22 +172,26 @@ const styles = StyleSheet.create({
 		// marginTop: 6,
 		// paddingTop: 24,
 		paddingLeft: 24,
-		color: 'gray',
+		color: '#6E7191',
 	},
 	textInput: {
-		borderRadius: 0,
-		borderTopLeftRadius: 0,
-		borderTopRightRadius: 0,
-        height: 64,
+		borderRadius: 5,
+		// borderTopLeftRadius: 0,
+		// borderTopRightRadius: 0,
+		borderBottomWidth: 0,
+		// height: 57,
 		overflow: 'hidden',
-		backgroundColor: '#fff',
+		marginTop: 12,
+		color:'#14142B',
+		height:64,
+		// backgroundColor: '#fff',
 	},
 	smalltext: {
 		fontSize: 12,
 		marginTop: 16,
 		// paddingTop: 24,
 		paddingLeft: 24,
-		color: 'gray',
+		color: '#14142B',
 	},
 	terms: {
 		fontSize: 12,
@@ -256,14 +215,13 @@ const styles = StyleSheet.create({
 	},
 	btnContainer: {
 		// backgroundColor: 'white',
-		// paddingTop: 10,
+		paddingTop: 30,
 		// justifyContent: 'center',
 		alignItems: 'center',
 	},
 	button: {
 		// flex: 1,
-		justifyContent: 'center',
-        height: 64,
-		width: '100%'
+		borderRadius: 4,
+		width: '100%',
 	},
 });

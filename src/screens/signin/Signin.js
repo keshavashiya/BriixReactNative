@@ -4,11 +4,14 @@ import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 import { IconX, ICON_TYPE } from '../../icons';
+import useAppTheme from '../../theme/context';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
 
 const Signin = props => {
+	const { theme } = useAppTheme();
+
 	const InitialState = {
 		isValid: false,
 		values: {},
@@ -189,9 +192,9 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
-		color: '#14142B',
-		height: 64,
-		// backgroundColor: '#fff',
+		// color: '#14142B',
+		height: 68,
+		fontSize: 18,
 	},
 	smalltext: {
 		fontSize: 12,

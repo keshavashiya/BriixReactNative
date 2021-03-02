@@ -4,16 +4,19 @@ import { View, KeyboardAvoidingView, StyleSheet, Text, ScrollView } from 'react-
 import { Button, TextInput } from 'react-native-paper';
 // import Icon from 'react-native-vector-icons/Feather';
 import { IconX, ICON_TYPE } from '../../icons';
+import useAppTheme from '../../theme/context';
 // import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
 // import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 
-// import Routes from '../../navigation/routes';
-// import NavigationService from '../../navigation';
+import Routes from '../../navigation/routes';
+import NavigationService from '../../navigation';
 
 import { Snackbar } from '../components';
 
 const Signup = props => {
+	const { theme } = useAppTheme();
+
 	const InitialState = {
 		isValid: false,
 		values: {},
@@ -229,12 +232,21 @@ const Signup = props => {
 					</View>
 					<View style={styles.btnContainer}>
 						<Button
-							style={styles.button}
+							style={styles.button(theme)}
 							// disabled={disabled}
 							// title="Submit"
 							mode="contained"
 							onPress={handleSubmit}>
 							Sign up
+						</Button>
+						<Button
+							style={styles.button(theme)}
+							// disabled={disabled}
+							// title="Submit"
+							color="#002842"
+							mode="text"
+							onPress={() => NavigationService.navigate(Routes.SIGNIN_SCREEN)}>
+							Sign In
 						</Button>
 						<Text style={styles.smalltext}>By creating your account, you agree</Text>
 						<Text style={styles.terms}>to our Terms & Conditions</Text>
@@ -295,6 +307,7 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
+		fontSize: 18,
 		// backgroundColor: '#fff',
 	},
 	smalltext: {
@@ -330,8 +343,10 @@ const styles = StyleSheet.create({
 		// justifyContent: 'center',
 		alignItems: 'center',
 	},
-	button: {
+	button: theme => ({
 		// flex: 1,
 		width: '100%',
-	},
+		// backgroundColor: theme.colors.primary,
+		marginTop: 16,
+	}),
 });

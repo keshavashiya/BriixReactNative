@@ -157,8 +157,8 @@ const ResetPassword = props => {
 							<TextInput.Icon
 								name={() => (
 									<IconX
-										origin={ICON_TYPE.MATERIAL_COMMUNITY}
-										name={viewPassword ? 'eye-outline' : 'eye-off-outline'}
+										origin={ICON_TYPE.FEATHER_ICONS}
+										name={viewPassword ? 'eye' : 'eye-off'}
 										size={16}
 									/>
 								)}
@@ -178,7 +178,7 @@ const ResetPassword = props => {
 							<TextInput.Icon
 								name={() => (
 									<IconX
-										origin={ICON_TYPE.MATERIAL_COMMUNITY}
+										origin={ICON_TYPE.FEATHER_ICONS}
 										name={viewConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
 										size={16}
 									/>

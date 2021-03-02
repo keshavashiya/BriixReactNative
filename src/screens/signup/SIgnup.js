@@ -125,6 +125,7 @@ const Signup = props => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
+		onToggleSnackBar();
 
 		console.log(formState.values);
 	};

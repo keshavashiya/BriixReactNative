@@ -7,6 +7,7 @@ import { IconX, ICON_TYPE } from '../../icons';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
+import {validateEmail, validatePassword} from '../../helper';
 
 const Signin = props => {
 	const InitialState = {
@@ -18,8 +19,8 @@ const Signin = props => {
 
 	const [formState, setFormState] = useState(InitialState);
 	const [eyeState, setEyeVisible] = useState(true);
-	const [emailError, setEmailError] = useState(false);
-	const [passwordError, setPasswordError] = useState(false);
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 
 	const handleEmailChange = text => {
 		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
@@ -34,7 +35,7 @@ const Signin = props => {
 				Email: true,
 			},
 		}));
-		setEmailError(false);
+		setEmailError('');
 	};
 
 	const handlePasswordChange = text => {
@@ -50,20 +51,13 @@ const Signin = props => {
 				Password: true,
 			},
 		}));
-		setPasswordError(false);
+		setPasswordError('');
 	};
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-		if (reg.test(formState.values.Email)) {
-			console.log('Email is Correct');
-			setEmailError(false);
-		} else {
-			setEmailError(true);
-			console.log('Email is Not Correct');
-		}
-		setPasswordError(true);
+		setEmailError(validateEmail(formState.values.Email));
+		setPasswordError(validatePassword(formState.values.Password));
 		console.log(formState);
 	};
 
@@ -88,10 +82,8 @@ const Signin = props => {
 							style={[styles.textInput]}
 						/>
 						{emailError ? (
-							<HelperText type="error" visible={emailError}>
-								{formState.touched.Email && formState.values.Email.length
-									? 'Email address is invalid!'
-									: 'Please enter your email address.'}
+							<HelperText type="error">
+								{emailError}
 							</HelperText>
 						) : null}
 						<TextInput
@@ -118,10 +110,8 @@ const Signin = props => {
 							}
 						/>
 						{passwordError ? (
-							<HelperText type="error" visible={passwordError}>
-								{formState.touched.Password && formState.values.Password.length
-									? ''
-									: 'Please enter your password.'}
+							<HelperText type="error">
+								{passwordError}
 							</HelperText>
 						) : null}
 						<TouchableOpacity onPress={() => NavigationService.navigate(Routes.RESET_PASSWORD_SCREEN)}>

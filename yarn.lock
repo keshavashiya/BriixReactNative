@@ -5891,6 +5891,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-confirmation-code-field@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-confirmation-code-field/-/react-native-confirmation-code-field-7.0.0.tgz#259cf9d2c0416c1483d93e68adccda4968d674f6"
+  integrity sha512-8ULfZH2YdPyIROM6iKi+AJ6M56UJ8xv7XS77yvakPa2LfmpdEwgl8g/vxClBA3wmYjxxz3KtU1kJbMl0RnnkVw==
+
 react-native-gesture-handler@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.2.tgz#3e42329797e8d22bdb2a4d7bf84a41da7e19498b"

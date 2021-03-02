@@ -179,7 +179,7 @@ const ResetPassword = props => {
 								name={() => (
 									<IconX
 										origin={ICON_TYPE.FEATHER_ICONS}
-										name={viewConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
+										name={viewConfirmPassword ? 'eye' : 'eye-off'}
 										size={16}
 									/>
 								)}

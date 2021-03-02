@@ -195,9 +195,9 @@ const Signup = props => {
 								<TextInput.Icon
 									name={() => (
 										<IconX
-											origin={ICON_TYPE.MATERIAL_COMMUNITY}
-											name={viewPassword ? 'eye-outline' : 'eye-off-outline'}
-											size={30}
+											origin={ICON_TYPE.FEATHER_ICONS}
+											name={viewPassword ? 'eye' : 'eye-off'}
+											size={16}
 										/>
 									)}
 									onPress={() => setViewPassword(!viewPassword)}
@@ -216,9 +216,9 @@ const Signup = props => {
 								<TextInput.Icon
 									name={() => (
 										<IconX
-											origin={ICON_TYPE.MATERIAL_COMMUNITY}
-											name={viewConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
-											size={30}
+											origin={ICON_TYPE.FEATHER_ICONS}
+											name={viewConfirmPassword ? 'eye' : 'eye-off'}
+											size={16}
 										/>
 									)}
 									onPress={() => setViewConfirmPassword(!viewConfirmPassword)}

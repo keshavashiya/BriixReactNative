@@ -124,7 +124,7 @@ const Signin = props => {
 									: 'Please enter your password.'}
 							</HelperText>
 						) : null}
-						<TouchableOpacity>
+						<TouchableOpacity onPress={() => NavigationService.navigate(Routes.RESET_PASSWORD_SCREEN)}>
 							<Text style={[styles.smalltext, { textAlign: 'right' }]}>Forgot Password?</Text>
 						</TouchableOpacity>
 					</View>
@@ -145,8 +145,7 @@ const Signin = props => {
 							// title="Submit"
 							color="#002842"
 							mode="text"
-							// onPress={NavigationService.navigate(Routes.SIGNUP_SCREEN)}
-						>
+							onPress={() => NavigationService.navigate(Routes.SIGNUP_SCREEN)}>
 							Sign Up
 						</Button>
 					</View>

@@ -159,7 +159,7 @@ const ResetPassword = props => {
 									<IconX
 										origin={ICON_TYPE.MATERIAL_COMMUNITY}
 										name={viewPassword ? 'eye-outline' : 'eye-off-outline'}
-										size={30}
+										size={16}
 									/>
 								)}
 								onPress={() => setViewPassword(!viewPassword)}
@@ -180,7 +180,7 @@ const ResetPassword = props => {
 									<IconX
 										origin={ICON_TYPE.MATERIAL_COMMUNITY}
 										name={viewConfirmPassword ? 'eye-outline' : 'eye-off-outline'}
-										size={30}
+										size={16}
 									/>
 								)}
 								onPress={() => setViewConfirmPassword(!viewConfirmPassword)}

@@ -9,7 +9,7 @@ export const validateEmail = value => {
 	let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	if (reg.test(value)) {
 		return '';
-	}else{
+	} else {
 		return value ? message.INVALIDATE_EMAIL : message.EMPTY_EMAIL;
 	}
 };

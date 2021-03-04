@@ -11,7 +11,7 @@
 		"prettier": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
 	},
 	"dependencies": {
-		"@react-native-community/async-storage": "^1.12.1",
+		"@react-native-async-storage/async-storage": "^1.14.1",
 		"@react-native-community/masked-view": "^0.1.10",
 		"@react-native-community/netinfo": "^6.0.0",
 		"@react-navigation/material-bottom-tabs": "^5.3.14",

@@ -159,6 +159,7 @@ const Signup = props => {
 		}
 
 		console.log(formState.values);
+		NavigationService.navigate(Routes.OTP_SCREEN);
 	};
 
 	return (

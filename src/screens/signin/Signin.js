@@ -81,18 +81,18 @@ const Signin = props => {
 		setModalVisible(!ismodalVisible);
 	};
 
-	useEffect(() => {
-		const backAction = () => {
-			console.log(ismodalVisible);
-			if (ismodalVisible) {
-				BackHandler.exitApp();
-			} else {
-				console.log('Rupesh');
-			}
-		};
-		const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
-		return () => backHandler.remove();
-	}, []);
+	// useEffect(() => {
+	// 	const backAction = () => {
+	// 		console.log(ismodalVisible);
+	// 		if (ismodalVisible) {
+	// 			BackHandler.exitApp();
+	// 		} else {
+	// 			console.log('Rupesh');
+	// 		}
+	// 	};
+	// 	const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+	// 	return () => backHandler.remove();
+	// }, []);
 
 	return (
 		<ScrollView>

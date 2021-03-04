@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, HelperText } from 'react-native-paper';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+
+import { validateOtp } from '../../helper';
 
 const CELL_COUNT = 6;
 
 const Otp = () => {
 	const [enableMask] = useState(false);
-	const [value, setValue] = useState('');
+	const [value, setValue] = useState(null);
 	const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
 	const [props, getCellOnLayoutHandler] = useClearByFocusCell({
 		value,
 		setValue,
 	});
+
+	const [otpError, setOtpError] = useState(null);
+
 	// const toggleMask = () => setEnableMask(f => !f);
 
 	const renderCell = ({ index, symbol, isFocused }) => {
@@ -39,7 +44,16 @@ const Otp = () => {
 		setValue(val);
 	};
 
-	const handleSubmit = () => {};
+	const handleSubmit = () => {
+		console.log(value);
+		const msg = validateOtp(value);
+		console.log(msg);
+		if (msg) {
+			setOtpError(msg);
+		} else {
+			setOtpError(null);
+		}
+	};
 	return (
 		<KeyboardAvoidingView
 			// behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -60,6 +74,7 @@ const Otp = () => {
 						textContentType="oneTimeCode"
 						renderCell={renderCell}
 					/>
+					{otpError ? <HelperText type="error">{otpError}</HelperText> : null}
 				</View>
 				<View style={styles.btnContainer}>
 					<Button

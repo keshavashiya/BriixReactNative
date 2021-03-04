@@ -8,7 +8,7 @@ import useAppTheme from '../../theme/context';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
-import {validateEmail, validatePassword} from '../../helper';
+import { validateEmail, validatePassword } from '../../helper';
 
 const Signin = props => {
 	const { theme } = useAppTheme();
@@ -84,11 +84,7 @@ const Signin = props => {
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
 						/>
-						{emailError ? (
-							<HelperText type="error">
-								{emailError}
-							</HelperText>
-						) : null}
+						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.Password || ''}
@@ -112,11 +108,7 @@ const Signin = props => {
 								/>
 							}
 						/>
-						{passwordError ? (
-							<HelperText type="error">
-								{passwordError}
-							</HelperText>
-						) : null}
+						{passwordError ? <HelperText type="error">{passwordError}</HelperText> : null}
 						<TouchableOpacity onPress={() => NavigationService.navigate(Routes.RESET_PASSWORD_SCREEN)}>
 							<Text style={[styles.smalltext, { textAlign: 'right' }]}>Forgot Password?</Text>
 						</TouchableOpacity>

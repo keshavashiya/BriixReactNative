@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
 import { View, KeyboardAvoidingView, StyleSheet, Text } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, HelperText } from 'react-native-paper';
 // import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
 // import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 
 import { IconX, ICON_TYPE } from '../../icons';
+import { comparePassword, validatePassword } from '../../helper';
 
 // import { useAppContext } from '../../services/auth/AppContext';
 // import { APP_STATE } from '../../constants';
@@ -53,17 +54,21 @@ const ResetPassword = props => {
 	const [viewPassword, setViewPassword] = useState(true);
 	const [viewConfirmPassword, setViewConfirmPassword] = useState(true);
 
+	const [passwordError, setPasswordError] = useState(null);
+	const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+	const [compareError, setCompareError] = useState(null);
+
 	// const [visible, setVisible] = useState(false);
 
 	// const onToggleSnackBar = () => setVisible(true);
 
 	// const onDismissSnackBar = () => setVisible(false);
 
-	useEffect(() => {
-		if (formState.values.ConfirmPassword && formState.values.Password === formState.values.ConfirmPassword) {
-			setDisabled(false);
-		}
-	}, [formState.values]);
+	// useEffect(() => {
+	// 	if (formState.values.ConfirmPassword && formState.values.Password === formState.values.ConfirmPassword) {
+	// 		setDisabled(false);
+	// 	}
+	// }, [formState.values]);
 
 	// useEffect(() => {
 	// 	if (setPasswordSuccess) {
@@ -126,11 +131,23 @@ const ResetPassword = props => {
 	const handleSubmit = event => {
 		event.preventDefault();
 
-		if (!formState.values.Password && !formState.values.ConfirmPassword) {
-			setDisabled(true);
+		setPasswordError(validatePassword(formState.values.Password));
+		setConfirmPasswordError(validatePassword(formState.values.ConfirmPassword));
+		setCompareError(comparePassword(formState.values.Password, formState.values.ConfirmPassword));
+
+		if (
+			validatePassword(formState.values.Password) ||
+			validatePassword(formState.values.ConfirmPassword) ||
+			comparePassword(formState.values.Password, formState.values.ConfirmPassword)
+		) {
+			return;
 		}
 
-		// console.log(formState.values);
+		// if (!formState.values.Password && !formState.values.ConfirmPassword) {
+		// 	setDisabled(true);
+		// }
+
+		console.log(formState.values);
 		// dispatch(actions.setPassword(formState.values));
 	};
 
@@ -158,7 +175,7 @@ const ResetPassword = props => {
 								name={() => (
 									<IconX
 										origin={ICON_TYPE.FEATHER_ICONS}
-										name={viewPassword ? 'eye' : 'eye-off'}
+										name={viewPassword ? 'eye-off' : 'eye'}
 										size={16}
 									/>
 								)}
@@ -166,6 +183,7 @@ const ResetPassword = props => {
 							/>
 						}
 					/>
+					{passwordError ? <HelperText type="error">{passwordError}</HelperText> : null}
 					<TextInput
 						mode="flat"
 						value={formState.values.ConfirmPassword || ''}
@@ -179,7 +197,7 @@ const ResetPassword = props => {
 								name={() => (
 									<IconX
 										origin={ICON_TYPE.FEATHER_ICONS}
-										name={viewConfirmPassword ? 'eye' : 'eye-off'}
+										name={viewConfirmPassword ? 'eye-off' : 'eye'}
 										size={16}
 									/>
 								)}
@@ -187,11 +205,14 @@ const ResetPassword = props => {
 							/>
 						}
 					/>
+					{confirmPasswordError || compareError ? (
+						<HelperText type="error">{confirmPasswordError || compareError}</HelperText>
+					) : null}
 				</View>
 				<View style={styles.btnContainer}>
 					<Button
 						style={styles.button}
-						disabled={disabled}
+						// disabled={disabled}
 						// title="Submit"
 						mode="contained"
 						onPress={handleSubmit}>

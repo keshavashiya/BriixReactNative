@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, TouchableOpacity } from 'react-native';
+import {
+	View,
+	KeyboardAvoidingView,
+	StyleSheet,
+	Text,
+	Platform,
+	ScrollView,
+	TouchableOpacity,
+	Modal,
+	BackHandler,
+} from 'react-native';
 import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
-import { ButtonX, InputX } from '../../components';
 
 import { IconX, ICON_TYPE } from '../../icons';
-import useAppTheme from '../../theme/context';
+import { svgIcon } from '../../../assets/svgfiles';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
+import colors from '../../theme/Colors';
 import { validateEmail, validatePassword } from '../../helper';
+import { SvgXml } from 'react-native-svg';
+import { ButtonX, InputX } from '../../components';
+
+import useAppTheme from '../../theme/context';
 
 const Signin = props => {
 	const { theme } = useAppTheme();
@@ -26,6 +40,7 @@ const Signin = props => {
 	const [eyeState, setEyeVisible] = useState(true);
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+	const [ismodalVisible, setModalVisible] = useState(true);
 
 	const handleEmailChange = text => {
 		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
@@ -66,6 +81,24 @@ const Signin = props => {
 		console.log(formState);
 	};
 
+	const handleModal = event => {
+		event.preventDefault();
+		setModalVisible(!ismodalVisible);
+	};
+
+	// useEffect(() => {
+	// 	const backAction = () => {
+	// 		console.log(ismodalVisible);
+	// 		if (ismodalVisible) {
+	// 			BackHandler.exitApp();
+	// 		} else {
+	// 			console.log('Rupesh');
+	// 		}
+	// 	};
+	// 	const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+	// 	return () => backHandler.remove();
+	// }, []);
+
 	return (
 		<ScrollView>
 			<KeyboardAvoidingView
@@ -93,6 +126,7 @@ const Signin = props => {
 							label="Username"
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
+						/>
 						/> */}
 						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
@@ -144,7 +178,27 @@ const Signin = props => {
 							Sign Up
 						</Button>
 					</View>
+					<View style={styles.fingerprintViewContainer}>
+						<TouchableOpacity style={styles.fingerprintBtn} onPress={handleModal}>
+							<Text style={styles.modalSmallText}>Login using fingerprint</Text>
+						</TouchableOpacity>
+						<SvgXml xml={svgIcon.Fingerprint} style={styles.fingerprintIconStyle} />
+					</View>
 				</View>
+				<Modal transparent visible={ismodalVisible} animationType="slide">
+					<View style={styles.ModalView}>
+						<View style={styles.signInOption}>
+							<Text style={styles.modalTextStyle}>Confirm Using Your Fingerprint</Text>
+							<View style={{ marginTop: 20 }}>
+								<SvgXml xml={svgIcon.Fingerprint} style={styles.fingerprintIconStyle} />
+								<Text style={styles.modalSmallText}>Touch the fingerprint sensor</Text>
+								<TouchableOpacity style={styles.modalBtn} onPress={handleModal}>
+									<Text style={styles.modalBtnTextStyle}>Use Password</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					</View>
+				</Modal>
 				{/* </TouchableWithoutFeedback> */}
 			</KeyboardAvoidingView>
 		</ScrollView>
@@ -225,5 +279,70 @@ const styles = StyleSheet.create({
 		// flex: 1,
 		borderRadius: 4,
 		width: '100%',
+	},
+	ModalView: {
+		flex: 1,
+		backgroundColor: colors.transparentBlack,
+		justifyContent: 'flex-end',
+	},
+
+	fingerprintViewContainer: {
+		marginVertical: 20,
+		paddingVertical: 20,
+		alignItems: 'center',
+	},
+	fingerprintBtn: {
+		width: '100%',
+		//backgroundColor: colors.white,
+		justifyContent: 'center',
+		alignItems: 'center',
+		paddingVertical: 5,
+	},
+
+	signInOption: {
+		marginTop: 10,
+		backgroundColor: colors.white,
+		width: '100%',
+		paddingVertical: 25,
+		borderTopLeftRadius: 10,
+		borderTopRightRadius: 10,
+	},
+	modalTextStyle: {
+		fontFamily: 'Poppins',
+		fontSize: 20,
+		fontStyle: 'normal',
+		fontWeight: '500',
+		textAlign: 'center',
+		color: colors.black,
+		lineHeight: 30,
+	},
+	fingerprintIconStyle: {
+		alignSelf: 'center',
+		marginVertical: 20,
+	},
+	modalSmallText: {
+		fontFamily: 'Jost',
+		fontWeight: '400',
+		fontStyle: 'normal',
+		fontSize: 12,
+		lineHeight: 17,
+		textAlign: 'center',
+		color: '#757575',
+	},
+	modalBtn: {
+		backgroundColor: colors.white,
+		height: 40,
+		width: 90,
+		margin: 16,
+		alignItems: 'flex-start',
+		justifyContent: 'center',
+	},
+	modalBtnTextStyle: {
+		fontFamily: 'Roboto',
+		fontSize: 14,
+		fontStyle: 'normal',
+		fontWeight: '500',
+		lineHeight: 16,
+		color: '#3AACE2',
 	},
 });

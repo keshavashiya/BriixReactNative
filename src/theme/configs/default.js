@@ -10,14 +10,16 @@ const theme = {
 		...DefaultTheme.colors,
 		primary: '#002842',
 		accent: '#a5be00',
-		background: colors.issabeline,
+		// background: colors.issabeline,
+		background: colors.white,
 		text: colors.panegrey,
 		placeholder: colors.ashgrey,
 		header: '#5c80bc',
 		headerTitle: colors.white,
 
 		//react-native-paper theme colors
-		surface: colors.white,
+		// surface: colors.white,
+		surface: colors.issabeline,
 		primaryText: colors.darkgunmetal,
 	},
 };

@@ -3,6 +3,8 @@ import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, Tou
 import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
+import { ButtonX, InputX } from '../../components';
+
 import { IconX, ICON_TYPE } from '../../icons';
 import useAppTheme from '../../theme/context';
 
@@ -76,14 +78,22 @@ const Signin = props => {
 				<Text style={styles.text}>Sign In to Continue</Text>
 				<View style={styles.inner}>
 					<View>
-						<TextInput
+						<InputX
+							mode="flat"
+							value={formState.values.Email || ''}
+							placeholder="username"
+							label="username"
+							onChangeText={text => handleEmailChange(text)}
+							style={[styles.textInput]}
+						/>
+						{/* <TextInput
 							mode="flat"
 							value={formState.values.Email || ''}
 							// placeholder="email/mobile"
 							label="Username"
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
-						/>
+						/> */}
 						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
 							mode="flat"

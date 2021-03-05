@@ -28,8 +28,7 @@ const Intro = () => {
 
 	const handleIntro = async () => {
 		try {
-			const res = await AsyncStorage.setItem('intro', 'INTRO');
-			// console.log('INININININININININITTTTTOOOOOO', res);
+			await AsyncStorage.setItem('intro', 'INTRO');
 			dispatch(actionsApp.state());
 		} catch (e) {
 			// error reading value

@@ -52,7 +52,7 @@ export const AppContextProvider = props => {
 	const getAppIntro = async () => {
 		// let intro;
 		try {
-			await AsyncStorage.removeItem('intro');
+			// await AsyncStorage.removeItem('intro');
 			const res = await AsyncStorage.getItem('intro');
 			const intro = res != null ? JSON.parse(res) : null;
 			if (intro !== APP_STATE.INTRO) {

@@ -22,8 +22,13 @@ import NavigationService from '../../navigation';
 import colors from '../../theme/Colors';
 import { validateEmail, validatePassword } from '../../helper';
 import { SvgXml } from 'react-native-svg';
+import { ButtonX, InputX } from '../../components';
+
+import useAppTheme from '../../theme/context';
 
 const Signin = props => {
+	const { theme } = useAppTheme();
+
 	const InitialState = {
 		isValid: false,
 		values: {},
@@ -106,7 +111,15 @@ const Signin = props => {
 				<Text style={styles.text}>Sign In to Continue</Text>
 				<View style={styles.inner}>
 					<View>
-						<TextInput
+						<InputX
+							mode="flat"
+							value={formState.values.Email || ''}
+							placeholder="username"
+							label="username"
+							onChangeText={text => handleEmailChange(text)}
+							style={[styles.textInput]}
+						/>
+						{/* <TextInput
 							mode="flat"
 							value={formState.values.Email || ''}
 							// placeholder="email/mobile"
@@ -114,6 +127,7 @@ const Signin = props => {
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
 						/>
+						/> */}
 						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
 							mode="flat"
@@ -224,9 +238,9 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
-		color: '#14142B',
-		height: 64,
-		// backgroundColor: '#fff',
+		// color: '#14142B',
+		height: 68,
+		fontSize: 18,
 	},
 	smalltext: {
 		fontSize: 12,

@@ -8,6 +8,7 @@ export const APP_STATE = {
 	PRIVATE: 'MAIN_APP',
 	AUTH: 'CHECKING_LOGIN',
 	UNKNOWN: 'UNKNOWN',
+	INTRO: 'INTRO',
 };
 
 export const STATUS = {

@@ -3,13 +3,18 @@ import { View, KeyboardAvoidingView, StyleSheet, Text, Platform, ScrollView, Tou
 import { Button, TextInput, Snackbar, HelperText } from 'react-native-paper';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
+import { ButtonX, InputX } from '../../components';
+
 import { IconX, ICON_TYPE } from '../../icons';
+import useAppTheme from '../../theme/context';
 
 import Routes from '../../navigation/routes';
 import NavigationService from '../../navigation';
-import {validateEmail, validatePassword} from '../../helper';
+import { validateEmail, validatePassword } from '../../helper';
 
 const Signin = props => {
+	const { theme } = useAppTheme();
+
 	const InitialState = {
 		isValid: false,
 		values: {},
@@ -73,19 +78,23 @@ const Signin = props => {
 				<Text style={styles.text}>Sign In to Continue</Text>
 				<View style={styles.inner}>
 					<View>
-						<TextInput
+						<InputX
+							mode="flat"
+							value={formState.values.Email || ''}
+							placeholder="username"
+							label="username"
+							onChangeText={text => handleEmailChange(text)}
+							style={[styles.textInput]}
+						/>
+						{/* <TextInput
 							mode="flat"
 							value={formState.values.Email || ''}
 							// placeholder="email/mobile"
 							label="Username"
 							onChangeText={text => handleEmailChange(text)}
 							style={[styles.textInput]}
-						/>
-						{emailError ? (
-							<HelperText type="error">
-								{emailError}
-							</HelperText>
-						) : null}
+						/> */}
+						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.Password || ''}
@@ -109,11 +118,7 @@ const Signin = props => {
 								/>
 							}
 						/>
-						{passwordError ? (
-							<HelperText type="error">
-								{passwordError}
-							</HelperText>
-						) : null}
+						{passwordError ? <HelperText type="error">{passwordError}</HelperText> : null}
 						<TouchableOpacity onPress={() => NavigationService.navigate(Routes.RESET_PASSWORD_SCREEN)}>
 							<Text style={[styles.smalltext, { textAlign: 'right' }]}>Forgot Password?</Text>
 						</TouchableOpacity>
@@ -179,9 +184,9 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
-		color: '#14142B',
-		height: 64,
-		// backgroundColor: '#fff',
+		// color: '#14142B',
+		height: 68,
+		fontSize: 18,
 	},
 	smalltext: {
 		fontSize: 12,

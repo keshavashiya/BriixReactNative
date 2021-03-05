@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 // import { StyleSheet, Text, View } from 'react-native';
 import { View, KeyboardAvoidingView, StyleSheet, Text, ScrollView } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, HelperText } from 'react-native-paper';
 // import Icon from 'react-native-vector-icons/Feather';
 import { IconX, ICON_TYPE } from '../../icons';
+import useAppTheme from '../../theme/context';
 // import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
 // import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
 
-// import Routes from '../../navigation/routes';
-// import NavigationService from '../../navigation';
+import Routes from '../../navigation/routes';
+import NavigationService from '../../navigation';
 
 import { Snackbar } from '../components';
+import { comparePassword, validateEmail, validatePassword, validateField, validateMobile } from '../../helper';
 
 const Signup = props => {
+	const { theme } = useAppTheme();
+
 	const InitialState = {
 		isValid: false,
 		values: {},
@@ -27,6 +31,14 @@ const Signup = props => {
 	const [viewConfirmPassword, setViewConfirmPassword] = useState(true);
 
 	const [visible, setVisible] = useState(false);
+
+	const [firstNameError, setFirstNameError] = useState(null);
+	const [lastNameError, setLastNameError] = useState(null);
+	const [emailError, setEmailError] = useState(null);
+	const [mobileError, setMobileError] = useState(null);
+	const [passwordError, setPasswordError] = useState(null);
+	const [cPasswordError, setCPasswordError] = useState(null);
+	const [compareError, setComareError] = useState(null);
 
 	// eslint-disable-next-line no-unused-vars
 	const onToggleSnackBar = () => setVisible(true);
@@ -49,7 +61,6 @@ const Signup = props => {
 	};
 
 	const handleLastNameChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
 		setFormState(frmState => ({
 			...frmState,
 			values: {
@@ -125,9 +136,29 @@ const Signup = props => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		onToggleSnackBar();
+
+		// onToggleSnackBar();
+		const fNameError = validateField(formState.values.FirstName);
+		const lNameError = validateField(formState.values.LastName);
+		const eError = validateEmail(formState.values.Email);
+		const mError = validateMobile(formState.values.MobileNumber);
+		const passError = validatePassword(formState.values.Password);
+		const cPassError = validatePassword(formState.values.ConfirmPassword);
+		const comPassError = comparePassword(formState.values.Password, formState.values.ConfirmPassword);
+
+		if (fNameError || lNameError || eError || mError || passError || cPassError || comPassError) {
+			setFirstNameError(fNameError);
+			setLastNameError(lNameError);
+			setEmailError(eError);
+			setMobileError(mError);
+			setPasswordError(passError);
+			setCPasswordError(cPassError);
+			setComareError(comPassError);
+			return;
+		}
 
 		console.log(formState.values);
+		NavigationService.navigate(Routes.OTP_SCREEN);
 	};
 
 	return (
@@ -156,6 +187,7 @@ const Signup = props => {
 									// underlineColor="transparent"
 									// theme={{ colors: { text: 'green', primary: 'yellow' } }}
 								/>
+								{firstNameError ? <HelperText type="error">{firstNameError}</HelperText> : null}
 							</View>
 							<View style={styles.lNameView}>
 								<TextInput
@@ -166,6 +198,7 @@ const Signup = props => {
 									onChangeText={text => handleLastNameChange(text)}
 									style={styles.textInput}
 								/>
+								{lastNameError ? <HelperText type="error">{lastNameError}</HelperText> : null}
 							</View>
 						</View>
 						<TextInput
@@ -176,6 +209,7 @@ const Signup = props => {
 							onChangeText={text => handleEmailChange(text)}
 							style={styles.textInput}
 						/>
+						{emailError ? <HelperText type="error">{emailError}</HelperText> : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.MobileNumber || ''}
@@ -184,6 +218,7 @@ const Signup = props => {
 							onChangeText={text => handleMobileNumberChange(text)}
 							style={styles.textInput}
 						/>
+						{mobileError ? <HelperText type="error">{mobileError}</HelperText> : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.Password || ''}
@@ -197,7 +232,7 @@ const Signup = props => {
 									name={() => (
 										<IconX
 											origin={ICON_TYPE.FEATHER_ICONS}
-											name={viewPassword ? 'eye' : 'eye-off'}
+											name={viewPassword ? 'eye-off' : 'eye'}
 											size={16}
 										/>
 									)}
@@ -205,6 +240,7 @@ const Signup = props => {
 								/>
 							}
 						/>
+						{passwordError ? <HelperText type="error">{passwordError}</HelperText> : null}
 						<TextInput
 							mode="flat"
 							value={formState.values.ConfirmPassword || ''}
@@ -218,7 +254,7 @@ const Signup = props => {
 									name={() => (
 										<IconX
 											origin={ICON_TYPE.FEATHER_ICONS}
-											name={viewConfirmPassword ? 'eye' : 'eye-off'}
+											name={viewConfirmPassword ? 'eye-off' : 'eye'}
 											size={16}
 										/>
 									)}
@@ -226,15 +262,27 @@ const Signup = props => {
 								/>
 							}
 						/>
+						{cPasswordError || compareError ? (
+							<HelperText type="error">{cPasswordError || compareError}</HelperText>
+						) : null}
 					</View>
 					<View style={styles.btnContainer}>
 						<Button
-							style={styles.button}
+							style={styles.button(theme)}
 							// disabled={disabled}
 							// title="Submit"
 							mode="contained"
 							onPress={handleSubmit}>
 							Sign up
+						</Button>
+						<Button
+							style={styles.button(theme)}
+							// disabled={disabled}
+							// title="Submit"
+							color="#002842"
+							mode="text"
+							onPress={() => NavigationService.navigate(Routes.SIGNIN_SCREEN)}>
+							Sign In
 						</Button>
 						<Text style={styles.smalltext}>By creating your account, you agree</Text>
 						<Text style={styles.terms}>to our Terms & Conditions</Text>
@@ -295,6 +343,7 @@ const styles = StyleSheet.create({
 		// height: 57,
 		overflow: 'hidden',
 		marginTop: 12,
+		fontSize: 18,
 		// backgroundColor: '#fff',
 	},
 	smalltext: {
@@ -330,8 +379,10 @@ const styles = StyleSheet.create({
 		// justifyContent: 'center',
 		alignItems: 'center',
 	},
-	button: {
+	button: theme => ({
 		// flex: 1,
 		width: '100%',
-	},
+		// backgroundColor: theme.colors.primary,
+		marginTop: 16,
+	}),
 });

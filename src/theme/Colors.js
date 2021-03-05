@@ -10,6 +10,7 @@ const colors = {
 	//bg
 	gainsboro: '#E2DCDE',
 	issabeline: '#EDEAEA', //active
+	// white: '#ffffff',
 	darkBg: '#121619',
 	antiflashWhite: '#FAF7F9',
 
@@ -21,6 +22,7 @@ const colors = {
 	panegrey: '#5C6D7C',
 	slategrey: '#6F8496',
 	ashgrey: '#AEB4BA',
+	inputColor: '#EFF0F6',
 
 	darkSkyBlue: '#76BED0',
 	//screen

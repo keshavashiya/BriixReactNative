@@ -1,6 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import { actions } from './slice';
 import { APP_STATE } from '../../constants';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import request from '../../../../services/request';
 
@@ -14,14 +15,28 @@ import { APP_STATE } from '../../constants';
 // const DELETE_URL = `/api/v1/${API_PATH}`;
 // const GET_ONE_URL = `/api/v1/${API_PATH}`;
 
-function appApi(data) {
+const appApi = async data => {
 	// return request({
 	// 	url: `${GET_URL}`,
 	// 	method: 'GET',
 	// });
 	// console.log(data);
-	return data ? data : APP_STATE.PUBLIC;
-}
+	// let intro;
+	// try {
+	// 	intro = await AsyncStorage.getItem('intro');
+	// } catch (e) {
+	// 	// error reading value
+	// }
+	// if (intro) {
+	// 	return APP_STATE.INTRO;
+	// } else
+	if (data) {
+		return data;
+	} else {
+		return APP_STATE.PUBLIC;
+	}
+	// return data ? data : APP_STATE.PUBLIC;
+};
 
 // function getApi(data) {
 // 	if (data && data.QueryParams) {

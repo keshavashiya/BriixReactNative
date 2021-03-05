@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback, useContext, useState } from 'react';
 import { Alert } from 'react-native';
-// import { APP_STATE } from '../../constants';
+import { APP_STATE } from '../../constants';
 // import { resetLoginCredentials } from '../Keychain';
 // import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 // import useCheckVersion from '../CheckVersion';
 import { useInjectSaga } from 'redux-injectors'; // useInjectReducer
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import sagaLogin from '../../screens/login/store/saga';
 // import { name as nameLogin, actions as actionsLogin } from '../../screens/login/store/slice';
 
@@ -49,9 +49,33 @@ export const AppContextProvider = props => {
 
 	const [state, setState] = useState(null);
 
+	const getAppIntro = async () => {
+		// let intro;
+		try {
+			// await AsyncStorage.removeItem('intro');
+			const res = await AsyncStorage.getItem('intro');
+			const intro = res != null ? JSON.parse(res) : null;
+			if (intro !== APP_STATE.INTRO) {
+				return APP_STATE.INTRO;
+			} else {
+				return APP_STATE.PUBLIC;
+			}
+		} catch (e) {
+			// error reading value
+		}
+		// console.log('introintrointrointrointrointro', intro);
+	};
+
 	useEffect(() => {
 		if (stateReducer.stateSuccess) {
-			setState(stateReducer.stateSuccess);
+			// let res = '';
+			getAppIntro().then(response => {
+				if (response === APP_STATE.INTRO) {
+					setState(APP_STATE.INTRO);
+				} else {
+					setState(stateReducer.stateSuccess);
+				}
+			});
 		}
 	}, [stateReducer]);
 

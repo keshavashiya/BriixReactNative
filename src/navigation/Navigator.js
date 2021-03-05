@@ -19,6 +19,7 @@ import LoginStack from './LoginStack';
 import MainStack from './mainStack/MainStack';
 import { useAppContext } from '../services/auth/AppContext';
 import { APP_STATE } from '../constants';
+import Intro from '../screens/intro/Intro';
 
 // import sagaApp from '../services/store/saga';
 // import { name as nameApp, actions as actionsApp } from '../services/store/slice';
@@ -68,6 +69,8 @@ function Navigator() {
 					<Stack.Screen name={Routes.MAIN_APP} component={MainStack} />
 				) : state === APP_STATE.PUBLIC ? (
 					<Stack.Screen name={Routes.LOGIN_STACK} component={LoginStack} />
+				) : state === APP_STATE.INTRO ? (
+					<Stack.Screen name={Routes.INTRO} component={Intro} />
 				) : (
 					<Stack.Screen name={Routes.LOADING} component={LaunchScreen} />
 				)}

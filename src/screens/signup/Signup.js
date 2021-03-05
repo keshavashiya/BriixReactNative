@@ -61,7 +61,6 @@ const Signup = props => {
 	};
 
 	const handleLastNameChange = text => {
-		// dispatch(actionsApp.state(APP_STATE.PRIVATE));
 		setFormState(frmState => ({
 			...frmState,
 			values: {
